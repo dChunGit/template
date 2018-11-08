@@ -5,11 +5,11 @@
           android:installLocation="internalOnly">
 
     <uses-permission android:name="com.android.vending.CHECK_LICENSE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 	
 	<uses-feature
         android:name="projekt.substratum.theme"
-        android:required="false" /> <!-- Set to true for block to be enabled -->
+        android:required="false" /> <!-- Set to true for OMS-rom only block to be enabled -->
 
     <application
         android:allowBackup="false"
@@ -17,12 +17,22 @@
         android:label="@string/ThemeName"
         android:supportsRtl="true"
         android:theme="@style/DialogStyle"
-        tools:node="replace">
+        tools:node="replace"
+        tools:ignore="GoogleAppIndexingWarning"
+        android:extractNativeLibs="false">
 
-        <activity android:name=".SubstratumLauncher">
+        <activity android:name="substratum.theme.template.SubstratumLauncher">
             <intent-filter>
                 <action android:name="projekt.substratum.THEME"/>
                 <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="projekt.substratum.lite.THEME"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="projekt.substratum.GET_KEYS" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -31,7 +41,7 @@
 
         <meta-data
             android:name="Substratum_Legacy"
-            android:value="true"/>
+            android:value="@bool/ThemeSupportLegacy"/>
         <meta-data
             android:name="Substratum_Name"
             android:value="@string/ThemeName"/>
@@ -40,21 +50,24 @@
             android:value="@string/ThemeAuthor"/>
         <meta-data
             android:name="Substratum_Email"
-            android:value=""/> <!-- Insert your email for bug reports -->
-        <!-- Do you support Stock and Theme Ready Gapps? -> all -->
-        <!-- Do you support Theme Ready but not Stock Gapps? -> ready -->
-        <!-- Do you support Stock but not Theme Ready Gapps? -> stock -->
+            android:value="@string/ThemeAuthorEmail"/>
         <meta-data
-            android:name="Substratum_ThemeReady"
-            android:value="all|ready|stock"/> <!-- Only pick one! -->
+            android:name="Substratum_Samsung"
+            android:value="@bool/ThemeSupportSamsung"/>
         <meta-data
             android:name="Substratum_Wallpapers"
-            android:value="http://pastebin.com/raw/TG4mFdXz"/>
+            android:value="@string/ThemeWallpaperSource"/>
+        <meta-data
+            android:name="Substratum_HeroOverride"
+            android:value="@string/ThemeHeroOverride"/>
 
         <!-- SUBSTRATUM INTERNAL USE: DO NOT TOUCH -->
         <meta-data
             android:name="Substratum_Plugin"
-            android:value="7.0.5"/>
+            android:value="14.0.2"/>
+        <meta-data
+            android:name="Substratum_Encryption"
+            android:value="@string/encryption_status"/>
 
     </application>
 
